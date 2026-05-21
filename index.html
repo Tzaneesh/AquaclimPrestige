@@ -240,7 +240,7 @@
     .btn-google:hover { border-color:var(--blue); color:var(--blue); background:var(--blue-lt); }
     .btn-google svg { width:18px; height:18px; }
 
-    .avis-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .avis-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; transition:opacity .38s ease; }
     @media(max-width:900px){ .avis-grid{grid-template-columns:1fr} }
     .avis-card { background:var(--bg); border-radius:var(--r); padding:24px; border:1.5px solid var(--border); transition:all .25s; position:relative; }
     .avis-card:hover { box-shadow:0 10px 30px rgba(26,92,204,.1); border-color:rgba(26,92,204,.2); transform:translateY(-3px); }
@@ -607,73 +607,7 @@
       Voir tous les avis Google
     </a>
   </div>
-  <!-- Les avis Google se chargent automatiquement via l'API Google Places (remplace les cartes ci-dessous) -->
-  <div class="avis-grid" id="avisGrid">
-
-    <div class="avis-card fi on" style="position:relative">
-      <span style="position:absolute;top:18px;right:18px;background:#FF6B35;color:white;font-size:10px;font-weight:700;padding:3px 9px;border-radius:50px;letter-spacing:.4px">AlloVoisins</span>
-      <div class="avis-card-top">
-        <div class="avis-author">
-          <div class="avis-avatar">L</div>
-          <div>
-            <div class="avis-author-name">Ludovic A.</div>
-            <div class="avis-author-date">11 mai 2026 · Entretien piscine</div>
-          </div>
-        </div>
-        <div class="avis-card-stars">
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        </div>
-      </div>
-      <p class="avis-text">« Loïc est un pisciniste vraiment au top. Gentil, ponctuel et très professionnel, il travaille avec sérieux et efficacité. On peut lui faire confiance les yeux fermés, je le recommande sans hésitation ! »</p>
-    </div>
-
-    <div class="avis-card fi on" style="position:relative">
-      <span style="position:absolute;top:18px;right:18px;background:#FF6B35;color:white;font-size:10px;font-weight:700;padding:3px 9px;border-radius:50px;letter-spacing:.4px">AlloVoisins</span>
-      <div class="avis-card-top">
-        <div class="avis-author">
-          <div class="avis-avatar">C</div>
-          <div>
-            <div class="avis-author-name">Christiane G.</div>
-            <div class="avis-author-date">21 oct. 2025 · Climatisation</div>
-          </div>
-        </div>
-        <div class="avis-card-stars">
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        </div>
-      </div>
-      <p class="avis-text">« Je tiens à vous remercier pour votre professionnalisme et votre amabilité. J'ai beaucoup apprécié votre travail très soigneux. Je n'hésiterai pas à vous recommander à mon entourage. Pour l'entretien de votre climatisation, n'hésitez pas à contacter Loïc ! »</p>
-    </div>
-
-    <div class="avis-card fi on" style="position:relative">
-      <span style="position:absolute;top:18px;right:18px;background:#FF6B35;color:white;font-size:10px;font-weight:700;padding:3px 9px;border-radius:50px;letter-spacing:.4px">AlloVoisins</span>
-      <div class="avis-card-top">
-        <div class="avis-author">
-          <div class="avis-avatar">E</div>
-          <div>
-            <div class="avis-author-name">Evelyne R.</div>
-            <div class="avis-author-date">14 sept. 2025 · Entretien piscine</div>
-          </div>
-        </div>
-        <div class="avis-card-stars">
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        </div>
-      </div>
-      <p class="avis-text">« Vraiment super prestation. Chez moi c'était compliqué, il m'a aidé pour commander les matériaux et en plus il prend moins cher que ce qui était prévu. Alors n'hésitez pas à le faire travailler ! »</p>
-    </div>
-
-  </div>
+  <div class="avis-grid" id="avisGrid"></div>
 </section>
 
 <!-- ZONES -->
@@ -814,67 +748,112 @@
     document.getElementById('fSuccess').style.display='block';
   }
 
-  // ── AVIS GOOGLE (Google Places API) ──────────────────────────────
-  // Remplacez VOTRE_CLE_API_ICI par votre vraie clé Google Maps API
-  const MAPS_API_KEY = 'AIzaSyAEqXI80S-UgPPafSRgUs0cF1y_KdpmGlo';
+  // ── AVIS (AlloVoisins + Google) — rotation aléatoire ─────────────
+  const MAPS_API_KEY = 'AIzaSyCtn_VFHM-4na7Pf2wacd-KYZALmz0E0Rc';
 
-  function googleLogo(){
-    return `<svg viewBox="0 0 24 24" fill="none" style="width:16px;height:16px;opacity:.3;position:absolute;top:18px;right:18px"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>`;
+  const AV_REVIEWS = [
+    { name:'Camille M.',    date:'21 mai 2026',   service:'Piscine',       rating:5, text:'Super service ! Très professionnel, a su identifier le problème et m\'aider. Je recommande !' },
+    { name:'Ludovic A.',    date:'11 mai 2026',   service:'Piscine',       rating:5, text:'Loïc est un pisciniste vraiment au top. Gentil, ponctuel et très professionnel, il travaille avec sérieux et efficacité. On peut lui faire confiance les yeux fermés, je le recommande sans hésitation !' },
+    { name:'Mery',          date:'10 mai 2026',   service:'Climatisation', rating:5, text:'Personne professionnelle, ponctuelle, courtoise et de bon conseil. Je recommande !' },
+    { name:'Silviya T.',    date:'25 avr. 2026',  service:'Climatisation', rating:5, text:'Très bon contact. Loïc est très serviable, ponctuel et travail soigneux. Je recommande.' },
+    { name:'Dan B.',        date:'30 mars 2026',  service:'Climatisation', rating:5, text:'Loïc a été honnête dès le départ, j\'apprécie particulièrement cela. Semble très sérieux. À une prochaine fois j\'espère. Bonne continuation !' },
+    { name:'Christiane G.', date:'21 oct. 2025',  service:'Climatisation', rating:5, text:'Je tiens à vous remercier pour votre professionnalisme et votre amabilité. J\'ai beaucoup apprécié votre travail très soigneux. Je n\'hésiterai pas à vous recommander à mon entourage.' },
+    { name:'Evelyne R.',    date:'14 sept. 2025', service:'Piscine',       rating:5, text:'Vraiment super prestation. Chez moi c\'était compliqué, il m\'a aidé pour commander les matériaux et en plus il prend moins cher que ce qui était prévu. N\'hésitez pas à le faire travailler !' },
+    { name:'Christiane B.', date:'4 sept. 2025',  service:'Climatisation', rating:5, text:'Réponse rapide, intervention efficace. Je recommande.' },
+    { name:'Fath S.',       date:'10 août 2025',  service:'Climatisation', rating:5, text:'Loïc très aimable, très à l\'écoute, il a su répondre à mes questions. En plus très honnête, je le recommande. Merci Loïc !' },
+    { name:'Mila L.',       date:'4 août 2025',   service:'Piscine',       rating:5, text:'Merci Loïc pour votre intervention, vous êtes très professionnel, et merci pour votre disponibilité très rapide. À bientôt !' },
+    { name:'Karine N.',     date:'27 juil. 2025', service:'Piscine',       rating:5, text:'Loïc est intervenu rapidement pour régler un problème de filtration de piscine, sympathique et professionnel, je le recommande vivement. Au top !' },
+    { name:'Margot A.',     date:'23 juil. 2025', service:'Climatisation', rating:5, text:'Super prise en charge, rien à dire. Loïc a été très rapide et a très bien fait le travail. Il a également bien répondu à mes questions, je le recommande.' },
+    { name:'Viviane K.',    date:'23 juil. 2025', service:'Piscine',       rating:5, text:'Loïc a eu l\'amabilité de m\'expliquer par message comment régler le contacteur. Très sympa de sa part !' },
+  ];
+
+  let POOL = AV_REVIEWS.map(r => ({...r, source:'av'}));
+  let rotIdx = 0;
+  let rotTimer = null;
+
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
   }
 
-  function starsHTML(n){
-    return Array.from({length:5},(_,i)=>`<svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:${i<n?'#F59E0B':'#E2EAF4'}"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`).join('');
+  function cardHTML(r) {
+    const init = r.name[0].toUpperCase();
+    const badge = r.source === 'av'
+      ? `<span style="position:absolute;top:18px;right:18px;background:#FF6B35;color:white;font-size:10px;font-weight:700;padding:3px 9px;border-radius:50px;letter-spacing:.4px">AlloVoisins</span>`
+      : `<svg viewBox="0 0 24 24" fill="none" style="position:absolute;top:18px;right:18px;width:18px;height:18px"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>`;
+    const stars = Array(5).fill(0).map((_,i) =>
+      `<svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:${i<r.rating?'#F59E0B':'#E2EAF4'}"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`
+    ).join('');
+    const sub = r.source === 'av' ? `${r.date} · ${r.service}` : r.date;
+    const avatar = r.photo
+      ? `<img src="${r.photo}" style="width:42px;height:42px;border-radius:50%;object-fit:cover" onerror="this.outerHTML='<div class=avis-avatar>${init}</div>'">`
+      : `<div class="avis-avatar">${init}</div>`;
+    return `<div class="avis-card" style="position:relative">
+      ${badge}
+      <div class="avis-card-top">
+        <div class="avis-author">${avatar}<div>
+          <div class="avis-author-name">${r.name}</div>
+          <div class="avis-author-date">${sub}</div>
+        </div></div>
+        <div class="avis-card-stars">${stars}</div>
+      </div>
+      <p class="avis-text">« ${r.text} »</p>
+    </div>`;
   }
 
-  function renderAvis(reviews, rating, total){
-    document.getElementById('avisNote').textContent = rating.toFixed(1);
-    document.getElementById('avisCount').textContent = total + ' avis Google vérifiés';
+  function showBatch() {
     const grid = document.getElementById('avisGrid');
-    const filtered = reviews.filter(r => r.rating >= 4).slice(0,3);
-    if(!filtered.length){ grid.innerHTML=''; return; }
-    grid.innerHTML = filtered.map(r => {
-      const initiale = r.author_name ? r.author_name[0].toUpperCase() : '?';
-      const photo = r.profile_photo_url
-        ? `<img src="${r.profile_photo_url}" style="width:42px;height:42px;border-radius:50%;object-fit:cover">`
-        : `<div class="avis-avatar">${initiale}</div>`;
-      return `<div class="avis-card fi on" style="position:relative">
-        ${googleLogo()}
-        <div class="avis-card-top">
-          <div class="avis-author">${photo}<div>
-            <div class="avis-author-name">${r.author_name}</div>
-            <div class="avis-author-date">${r.relative_time_description}</div>
-          </div></div>
-          <div class="avis-card-stars">${starsHTML(r.rating)}</div>
-        </div>
-        <p class="avis-text">« ${r.text} »</p>
-      </div>`;
-    }).join('');
+    grid.style.opacity = '0';
+    setTimeout(() => {
+      const batch = [];
+      for (let i = 0; i < 3; i++) {
+        batch.push(POOL[rotIdx % POOL.length]);
+        rotIdx++;
+      }
+      if (rotIdx >= POOL.length) { shuffle(POOL); rotIdx = 0; }
+      grid.innerHTML = batch.map(cardHTML).join('');
+      grid.style.opacity = '1';
+    }, 380);
   }
 
-  function initReviews(){
-    if(MAPS_API_KEY === 'VOTRE_CLE_API_ICI') return; // clé non configurée
+  function startRotation() {
+    shuffle(POOL);
+    rotIdx = 0;
+    showBatch();
+    if (rotTimer) clearInterval(rotTimer);
+    rotTimer = setInterval(showBatch, 6000);
+  }
+
+  startRotation();
+
+  function renderAvis(reviews, rating, total) {
+    document.getElementById('avisNote').textContent = rating.toFixed(1);
+    document.getElementById('avisCount').textContent = total + ' avis Google · ' + AV_REVIEWS.length + ' avis AlloVoisins';
+    const gReviews = reviews.filter(r => r.rating >= 4).slice(0,6).map(r => ({
+      name: r.author_name, date: r.relative_time_description, service:'Google',
+      text: r.text, rating: r.rating, photo: r.profile_photo_url || null, source:'google'
+    }));
+    POOL = [...AV_REVIEWS.map(r => ({...r, source:'av'})), ...gReviews];
+    startRotation();
+  }
+
+  function initReviews() {
     const svc = new google.maps.places.PlacesService(document.createElement('div'));
-    svc.findPlaceFromQuery({
-      query: 'AquaClim Prestige Nice',
-      fields: ['place_id']
-    }, (res, status) => {
-      if(status !== 'OK' || !res[0]) return;
-      svc.getDetails({
-        placeId: res[0].place_id,
-        fields: ['reviews','rating','user_ratings_total']
-      }, (place, ds) => {
-        if(ds === 'OK' && place.reviews) renderAvis(place.reviews, place.rating, place.user_ratings_total);
+    svc.findPlaceFromQuery({ query:'AquaClim Prestige Nice', fields:['place_id'] }, (res, status) => {
+      if (status !== 'OK' || !res[0]) return;
+      svc.getDetails({ placeId: res[0].place_id, fields:['reviews','rating','user_ratings_total'] }, (place, ds) => {
+        if (ds === 'OK' && place.reviews) renderAvis(place.reviews, place.rating, place.user_ratings_total);
       });
     });
   }
 
-  if(MAPS_API_KEY !== 'VOTRE_CLE_API_ICI'){
-    const s = document.createElement('script');
-    s.src = `https://maps.googleapis.com/maps/api/js?key=${MAPS_API_KEY}&libraries=places&callback=initReviews`;
-    s.async = true; s.defer = true;
-    document.head.appendChild(s);
-    window.initReviews = initReviews;
-  }
+  const s = document.createElement('script');
+  s.src = `https://maps.googleapis.com/maps/api/js?key=${MAPS_API_KEY}&libraries=places&callback=initReviews`;
+  s.async = true; s.defer = true;
+  document.head.appendChild(s);
+  window.initReviews = initReviews;
   // ─────────────────────────────────────────────────────────────────
 
   const io = new IntersectionObserver(entries=>{
