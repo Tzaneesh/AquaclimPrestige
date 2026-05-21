@@ -839,21 +839,39 @@
     startRotation();
   }
 
-  function initReviews() {
-    const svc = new google.maps.places.PlacesService(document.createElement('div'));
-    svc.findPlaceFromQuery({ query:'AquaClim Prestige Nice', fields:['place_id'] }, (res, status) => {
-      if (status !== 'OK' || !res[0]) return;
-      svc.getDetails({ placeId: res[0].place_id, fields:['reviews','rating','user_ratings_total'] }, (place, ds) => {
-        if (ds === 'OK' && place.reviews) renderAvis(place.reviews, place.rating, place.user_ratings_total);
+  async function initReviews() {
+    try {
+      const { Place } = await google.maps.importLibrary("places");
+      const { places } = await Place.searchByText({
+        textQuery: 'AquaClim Prestige Nice',
+        fields: ['id'],
+        language: 'fr',
       });
-    });
+      if (!places || !places.length) return;
+      const place = places[0];
+      await place.fetchFields({ fields: ['rating', 'userRatingCount', 'reviews'] });
+      if (place.reviews && place.reviews.length) {
+        const reviews = place.reviews
+          .filter(r => r.text?.text)
+          .map(r => ({
+            author_name: r.authorAttribution?.displayName || 'Client',
+            relative_time_description: r.relativePublishTimeDescription || '',
+            text: r.text.text,
+            rating: r.rating || 5,
+            profile_photo_url: r.authorAttribution?.photoURI || null,
+          }));
+        if (reviews.length) renderAvis(reviews, place.rating, place.userRatingCount);
+      }
+    } catch(e) {
+      console.log('Google reviews non chargés :', e);
+    }
   }
 
   const s = document.createElement('script');
-  s.src = `https://maps.googleapis.com/maps/api/js?key=${MAPS_API_KEY}&libraries=places&callback=initReviews`;
+  s.src = `https://maps.googleapis.com/maps/api/js?key=${MAPS_API_KEY}&libraries=places`;
   s.async = true; s.defer = true;
+  s.onload = () => initReviews();
   document.head.appendChild(s);
-  window.initReviews = initReviews;
   // ─────────────────────────────────────────────────────────────────
 
   const io = new IntersectionObserver(entries=>{
