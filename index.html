@@ -598,7 +598,7 @@
             <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
             <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
           </div>
-          <div class="avis-score-label" id="avisCount">14 avis AlloVoisins · 7 avis Google</div>
+          <div class="avis-score-label" id="avisCount">8 avis Google · 13 avis AlloVoisins</div>
         </div>
       </div>
     </div>
@@ -749,7 +749,6 @@
   }
 
   // ── AVIS (AlloVoisins + Google) — rotation aléatoire ─────────────
-  const MAPS_API_KEY = 'AIzaSyCtn_VFHM-4na7Pf2wacd-KYZALmz0E0Rc';
 
   const AV_REVIEWS = [
     { name:'Camille M.',    date:'21 mai 2026',   service:'Piscine',       rating:5, text:'Super service ! Très professionnel, a su identifier le problème et m\'aider. Je recommande !' },
@@ -767,7 +766,21 @@
     { name:'Viviane K.',    date:'23 juil. 2025', service:'Piscine',       rating:5, text:'Loïc a eu l\'amabilité de m\'expliquer par message comment régler le contacteur. Très sympa de sa part !' },
   ];
 
-  let POOL = AV_REVIEWS.map(r => ({...r, source:'av'}));
+  const GOOGLE_REVIEWS = [
+    { name:'Geneviève C.',  date:'21 mai 2026',  service:'Piscine',       rating:5, text:'Je recommande sans hésiter Loïc qui m\'a très bien aidée à remettre ma piscine en route, il est très serviable, fournit des prestations soignées, pour un prix très correct !' },
+    { name:'Guillaume O.',  date:'Avr. 2026',    service:'Piscine',       rating:5, text:'Loïc est vraiment quelqu\'un de très professionnel et sympathique avec une attention toute particulière portée à ses clients. Je le recommande vivement !' },
+    { name:'Florence M.',   date:'Mars 2026',    service:'Piscine',       rating:5, text:'Très satisfaite de l\'entretien de ma piscine ! Toujours ponctuel, très sérieux, professionnel et de très bon conseil. Travail soigné et régulier, ma piscine est toujours impeccable grâce à lui. Je recommande vivement !' },
+    { name:'Laurent M.',    date:'Mars 2026',    service:'Piscine',       rating:5, text:'Je suis extrêmement satisfait du travail réalisé pour l\'entretien annuel de ma piscine. Travail très professionnel et toujours à l\'écoute de ses clients. Je le recommande sans hésitation !' },
+    { name:'Kevin T.',      date:'Mars 2026',    service:'Climatisation', rating:5, text:'Très bien ! J\'ai été bien conseillé et les travaux ont été bien faits.' },
+    { name:'Julie T.',      date:'Mars 2026',    service:'Climatisation', rating:5, text:'Excellent travail. Le résultat est propre et bien réalisé. On voit que vous maîtrisez votre métier.' },
+    { name:'Rémy C.',       date:'Mars 2026',    service:'Divers',        rating:5, text:'Je recommande vivement, personne sérieuse.' },
+    { name:'Claude A.',     date:'Mars 2026',    service:'Climatisation', rating:5, text:'Travail sérieux, explications claires, travail bien fait.' },
+  ];
+
+  let POOL = [
+    ...AV_REVIEWS.map(r => ({...r, source:'av'})),
+    ...GOOGLE_REVIEWS.map(r => ({...r, source:'google'})),
+  ];
   let rotIdx = 0;
   let rotTimer = null;
 
@@ -828,50 +841,7 @@
 
   startRotation();
 
-  function renderAvis(reviews, rating, total) {
-    document.getElementById('avisNote').textContent = rating.toFixed(1);
-    document.getElementById('avisCount').textContent = total + ' avis Google · ' + AV_REVIEWS.length + ' avis AlloVoisins';
-    const gReviews = reviews.filter(r => r.rating >= 4).slice(0,6).map(r => ({
-      name: r.author_name, date: r.relative_time_description, service:'Google',
-      text: r.text, rating: r.rating, photo: r.profile_photo_url || null, source:'google'
-    }));
-    POOL = [...AV_REVIEWS.map(r => ({...r, source:'av'})), ...gReviews];
-    startRotation();
-  }
-
-  async function initReviews() {
-    try {
-      const { Place } = await google.maps.importLibrary("places");
-      const { places } = await Place.searchByText({
-        textQuery: 'AquaClim Prestige Nice',
-        fields: ['id'],
-        language: 'fr',
-      });
-      if (!places || !places.length) return;
-      const place = places[0];
-      await place.fetchFields({ fields: ['rating', 'userRatingCount', 'reviews'] });
-      if (place.reviews && place.reviews.length) {
-        const reviews = place.reviews
-          .filter(r => r.text?.text)
-          .map(r => ({
-            author_name: r.authorAttribution?.displayName || 'Client',
-            relative_time_description: r.relativePublishTimeDescription || '',
-            text: r.text.text,
-            rating: r.rating || 5,
-            profile_photo_url: r.authorAttribution?.photoURI || null,
-          }));
-        if (reviews.length) renderAvis(reviews, place.rating, place.userRatingCount);
-      }
-    } catch(e) {
-      console.log('Google reviews non chargés :', e);
-    }
-  }
-
-  const s = document.createElement('script');
-  s.src = `https://maps.googleapis.com/maps/api/js?key=${MAPS_API_KEY}&libraries=places`;
-  s.async = true; s.defer = true;
-  s.onload = () => initReviews();
-  document.head.appendChild(s);
+  document.getElementById('avisCount').textContent = '8 avis Google · 13 avis AlloVoisins';
   // ─────────────────────────────────────────────────────────────────
 
   const io = new IntersectionObserver(entries=>{
