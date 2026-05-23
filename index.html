@@ -503,6 +503,8 @@
     .btn-submit { width:100%; padding:15px; margin-top:8px; background:linear-gradient(135deg,var(--blue),var(--blue-dk)); color:white; border:none; border-radius:50px; font-family:'Inter',sans-serif; font-size:15px; font-weight:700; cursor:pointer; transition:all .25s; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 6px 20px rgba(26,92,204,.3); }
     .btn-submit svg { width:16px; height:16px; }
     .btn-submit:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(26,92,204,.4); }
+    .btn-submit:disabled { opacity:.7; cursor:not-allowed; transform:none; }
+    @keyframes spin { to { transform:rotate(360deg); } }
     .form-success { display:none; background:#F0FDF4; border:1px solid #BBF7D0; border-radius:10px; padding:16px; text-align:center; color:#166534; font-weight:600; font-size:14px; margin-top:12px; }
 
     /* ══════════════════════════════════
@@ -1074,42 +1076,45 @@
     </div>
     <div class="c-form">
       <h3>Formulaire de contact</h3>
-      <div class="fg2">
-        <div class="fg"><label>Prénom &amp; Nom *</label><input type="text" id="fNom" placeholder="Jean Dupont"></div>
-        <div class="fg"><label>Téléphone *</label><input type="tel" id="fTel" placeholder="06 XX XX XX XX"></div>
-      </div>
-      <div class="fg"><label>Email</label><input type="email" id="fEmail" placeholder="votre@email.fr"></div>
-      <div class="fg">
-        <label>Prestation souhaitée</label>
-        <select id="fPrestation">
-          <option value="">— Sélectionner —</option>
-          <optgroup label="Climatisation">
-            <option>Entretien climatisation</option>
-            <option>Dépannage climatisation</option>
-            <option>Mise en service climatisation</option>
-          </optgroup>
-          <optgroup label="Piscine">
-            <option>Entretien piscine chlore</option>
-            <option>Entretien piscine sel</option>
-            <option>Traitement choc / anti-algues</option>
-            <option>Hivernage piscine</option>
-            <option>Remise en service piscine</option>
-            <option>Dépannage pompe / équipements</option>
-          </optgroup>
-          <optgroup label="Jacuzzi / Spa">
-            <option>Entretien jacuzzi / spa</option>
-            <option>Vidange &amp; désinfection jacuzzi</option>
-            <option>Dépannage jacuzzi / spa</option>
-          </optgroup>
-          <option value="Autre">Autre / Je ne sais pas encore</option>
-        </select>
-      </div>
-      <div class="fg"><label>Message</label><textarea id="fMessage" placeholder="Décrivez votre besoin : type d'équipement, localisation, urgence…"></textarea></div>
-      <button class="btn-submit" onclick="envoyer()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        Envoyer ma demande
-      </button>
-      <div class="form-success" id="fSuccess">Votre demande a bien été envoyée. Je vous recontacte rapidement.</div>
+      <form id="contactForm" onsubmit="envoyer(event)">
+        <input type="hidden" name="_subject" value="Nouveau devis AquaClim Prestige">
+        <div class="fg2">
+          <div class="fg"><label>Prénom &amp; Nom *</label><input type="text" id="fNom" name="nom" placeholder="Jean Dupont" required></div>
+          <div class="fg"><label>Téléphone *</label><input type="tel" id="fTel" name="telephone" placeholder="06 XX XX XX XX" required></div>
+        </div>
+        <div class="fg"><label>Email</label><input type="email" id="fEmail" name="email" placeholder="votre@email.fr"></div>
+        <div class="fg">
+          <label>Prestation souhaitée</label>
+          <select id="fPrestation" name="prestation">
+            <option value="">— Sélectionner —</option>
+            <optgroup label="Climatisation">
+              <option>Entretien climatisation</option>
+              <option>Dépannage climatisation</option>
+              <option>Mise en service climatisation</option>
+            </optgroup>
+            <optgroup label="Piscine">
+              <option>Entretien piscine chlore</option>
+              <option>Entretien piscine sel</option>
+              <option>Traitement choc / anti-algues</option>
+              <option>Hivernage piscine</option>
+              <option>Remise en service piscine</option>
+              <option>Dépannage pompe / équipements</option>
+            </optgroup>
+            <optgroup label="Jacuzzi / Spa">
+              <option>Entretien jacuzzi / spa</option>
+              <option>Vidange &amp; désinfection jacuzzi</option>
+              <option>Dépannage jacuzzi / spa</option>
+            </optgroup>
+            <option value="Autre">Autre / Je ne sais pas encore</option>
+          </select>
+        </div>
+        <div class="fg"><label>Message</label><textarea id="fMessage" name="message" placeholder="Décrivez votre besoin : type d'équipement, localisation, urgence…"></textarea></div>
+        <button type="submit" class="btn-submit" id="btnSubmit">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Envoyer ma demande
+        </button>
+      </form>
+      <div class="form-success" id="fSuccess">✅ Votre demande a bien été envoyée ! Je vous recontacte très rapidement.</div>
     </div>
   </div>
 </section>
@@ -1286,15 +1291,32 @@
     setTimeout(()=>document.getElementById('fNom').focus(),600);
   }
 
-  function envoyer(){
-    const nom=document.getElementById('fNom').value.trim();
-    const tel=document.getElementById('fTel').value.trim();
-    if(!nom||!tel){alert('Merci de renseigner votre nom et téléphone.');return;}
-    const prest=document.getElementById('fPrestation').value;
-    const msg=document.getElementById('fMessage').value.trim();
-    const txt=`Bonjour, je souhaite un devis AquaClim Prestige.\n\nNom : ${nom}\nTél : ${tel}\nPrestation : ${prest||'Non précisé'}\n\n${msg}`;
-    window.open(`https://wa.me/33603537773?text=${encodeURIComponent(txt)}`,'_blank');
-    document.getElementById('fSuccess').style.display='block';
+  async function envoyer(e){
+    e.preventDefault();
+    const btn = document.getElementById('btnSubmit');
+    btn.disabled = true;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin .8s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Envoi en cours…';
+    const form = document.getElementById('contactForm');
+    const data = new FormData(form);
+    try {
+      const res = await fetch('https://formspree.io/f/mkoezwkk', {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if(res.ok){
+        form.style.display = 'none';
+        document.getElementById('fSuccess').style.display = 'block';
+      } else {
+        btn.disabled = false;
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Envoyer ma demande';
+        alert('Une erreur est survenue. Appelez-nous directement au 06 03 53 77 73.');
+      }
+    } catch(err){
+      btn.disabled = false;
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Envoyer ma demande';
+      alert('Problème de connexion. Appelez-nous au 06 03 53 77 73.');
+    }
   }
 
   // ── AVIS (AlloVoisins + Google) — rotation aléatoire ─────────────
